@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Data Storage</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f4f6fb;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
+            width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            padding: 6px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            border: none;
+            background: #6c63ff;
+            color: white;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        button:hover {
+            background: #574fd6;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #6c63ff;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Employee Data Storage</h2>
+
+    <label>Employee Name:</label>
+    <input type="text" id="name">
+    <br><br>
+
+    <label>Employee ID:</label>
+    <input type="text" id="id">
+    <br><br>
+
+    <label>Department:</label>
+    <input type="text" id="dept">
+    <br><br>
+
+    <label>Salary:</label>
+    <input type="number" id="salary">
+    <br><br>
+
+    <button onclick="addEmployee()">Add Employee</button>
+    <button onclick="displayAll()">Display All</button>
+    <button onclick="salaryAbove()">Salary > 50000</button>
+    <button onclick="averageSalary()">Average Salary</button>
+    <button onclick="countDepartment()">Count Department</button>
+
+    <br><br>
+
+    <table id="table">
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Salary</th>
+        </tr>
+    </table>
+
+    <p id="result"></p>
+
+</div>
+
+<script>
+
+let employees = [];
+
+function addEmployee() {
+
+    let name = document.getElementById("name").value;
+    let id = document.getElementById("id").value;
+    let dept = document.getElementById("dept").value;
+    let salary = Number(document.getElementById("salary").value);
+
+    employees.push({
+        name: name,
+        id: id,
+        dept: dept,
+        salary: salary
+    });
+
+    document.getElementById("name").value = "";
+    document.getElementById("id").value = "";
+    document.getElementById("dept").value = "";
+    document.getElementById("salary").value = "";
+
+    displayAll();
+}
+
+function displayAll() {
+
+    let table = document.getElementById("table");
+
+    table.innerHTML = `
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Salary</th>
+        </tr>
+    `;
+
+    employees.forEach(function(emp) {
+
+        let row = table.insertRow();
+
+        row.insertCell(0).innerHTML = emp.name;
+        row.insertCell(1).innerHTML = emp.id;
+        row.insertCell(2).innerHTML = emp.dept;
+        row.insertCell(3).innerHTML = emp.salary;
+
+    });
+}
+
+function salaryAbove() {
+
+    let result = employees.filter(function(emp) {
+        return emp.salary > 50000;
+    });
+
+    let text = "Employees with salary > 50000:<br>";
+
+    result.forEach(function(emp) {
+        text += emp.name + " (" + emp.salary + ")<br>";
+    });
+
+    document.getElementById("result").innerHTML = text;
+}
+
+function averageSalary() {
+
+    let sum = 0;
+
+    employees.forEach(function(emp) {
+        sum += emp.salary;
+    });
+
+    let avg = sum / employees.length;
+
+    document.getElementById("result").innerHTML =
+        "Average Salary: " + avg.toFixed(2);
+}
+
+function countDepartment() {
+
+    let deptCount = {};
+
+    employees.forEach(function(emp) {
+
+        if (deptCount[emp.dept]) {
+            deptCount[emp.dept]++;
+        } else {
+            deptCount[emp.dept] = 1;
+        }
+
+    });
+
+    let text = "Department Count:<br>";
+
+    for (let d in deptCount) {
+        text += d + " : " + deptCount[d] + "<br>";
+    }
+
+    document.getElementById("result").innerHTML = text;
+}
+
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
