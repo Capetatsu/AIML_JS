@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+
+    <style>
+    body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    }
+
+    .container{
+    background:rgb(241, 231, 244);
+    padding:35px;
+    width:320px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 0 15px rgb(203, 116, 247);
+    }
+
+    h2{
+    margin-bottom:15px;
+    }
+
+    input{
+    width:90%;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    }
+
+    button{
+    background:#bd6ef6;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:5px;
+    cursor:pointer;
+    }
+
+    button:hover{
+    background:#574fd6;
+    }
+
+    .result{
+    margin-top:20px;
+    font-weight:bold;
+    }
+    </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+        <h2>Student Result Calculator</h2>
+        <label>Enter Number of Subjects</label><br>
+        <input type="number" id="subjects"><br>
+        <button onclick="calc()">Calculate Result</button>
+        <div class="result" id="result"></div>
+    </div>
+
+
+    <script>
+    function calc(){
+        let sub = document.getElementById("subjects").value;
+        let sum = 0;
+        for(let i=0;i<sub;i++){
+            let marks = parseFloat(prompt("Enter marks for subject " + (i+1)));
+            sum = sum + marks;
+        }
+        let avg = sum / sub;
+        let grade;
+        if(avg >= 90){
+            grade = "A";
+        }
+        else if(avg >= 80){
+        grade = "B";
+        }
+        else if(avg >= 70){
+        grade = "C";
+        }
+        else if(avg >= 60){
+        grade = "D";
+        }
+        else{
+        grade = "F";
+        }
+        document.getElementById("result").innerHTML ="Average Marks: " + avg.toFixed(2) + "<br>Grade: " + grade;
+    }
+    </script>
+    </body>
+    <script src = "./script.js" type = "text/javascript"></script>
+</html>
